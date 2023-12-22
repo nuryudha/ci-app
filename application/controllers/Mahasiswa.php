@@ -5,6 +5,7 @@ class Mahasiswa extends CI_Controller
 {
 	public $m_mahasiswa;
 	public $form_validation;
+	public $session;
 
 	public function __construct()
 	{
@@ -33,7 +34,16 @@ class Mahasiswa extends CI_Controller
 			$this->load->view('mahasiswa/tambah');
 			$this->load->view('templates/footer');
 		} else {
-			echo "BERHASIl";
+			$this->m_mahasiswa->tambahDataMahasiswa();
+			$this->session->set_flashdata('flash', 'Ditambahkan'); // 1 nama session , 2 nama isinya apa
+			redirect('mahasiswa/index'); // kalau berhasil langsung pindah ke halaman mahasiswa
 		}
+	}
+
+	public function hapus($id)
+	{
+		$this->m_mahasiswa->hapusDataMahasiswa($id);
+		$this->session->set_flashdata('flash', 'Dihapus');
+		redirect('mahasiswa/index');
 	}
 }
